@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import "./App.css";
+import { TaskForm } from "./components/TaskForm";
+import { TaskTable } from "./components/TaskTable";
+import { TaskControls } from "./components/TaskControls";
+import { useTaskManager } from "./hooks/useTaskManager";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {
+    tasks,
+    loading,
+    error,
+    filter,
+    sortBy,
+    sortDir,
+    editing,
+    form,
+    handleDelete,
+    handleEdit,
+    handleFormChange,
+    handleFormSubmit,
+    handleCancel,
+    handleSortToggle,
+    setFilter,
+    setSortBy,
+  } = useTaskManager();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <h1>Task Manager</h1>
+      
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {loading && <div>Loading...</div>}
+      
+      <TaskControls
+        filter={filter}
+        sortBy={sortBy}
+        sortDir={sortDir}
+        onFilterChange={setFilter}
+        onSortToggle={handleSortToggle}
+        onSortByChange={setSortBy}
+      />
+
+      <TaskForm
+        form={form}
+        editing={editing}
+        onFormChange={handleFormChange}
+        onFormSubmit={handleFormSubmit}
+        onCancel={handleCancel}
+      />
+
+      <TaskTable
+        tasks={tasks}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;
