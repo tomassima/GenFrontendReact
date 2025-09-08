@@ -31,6 +31,16 @@ npm run build
 npm run preview
 ```
 
+### Testing
+
+```bash
+# Run tests once
+npm run test:run
+
+# Run tests in watch mode
+npm test
+```
+
 ## Notes
 
 - The Vite dev server proxies `/api` to `http://localhost:5020` by default (see `vite.config.ts`).
