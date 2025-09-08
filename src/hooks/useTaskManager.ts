@@ -65,7 +65,10 @@ export const useTaskManager = () => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "priority" ? Number(value) : value,
+      [name]:
+        name === "priority" || name === "status"
+            ? Number(value)
+            : value,
     }));
   };
 
